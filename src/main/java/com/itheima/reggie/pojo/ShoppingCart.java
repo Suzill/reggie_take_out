@@ -1,0 +1,81 @@
+package com.itheima.reggie.pojo;
+
+import com.baomidou.mybatisplus.annotation.*;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 购物车
+ * @TableName shopping_cart
+ */
+@TableName(value ="shopping_cart")
+@Data
+public class ShoppingCart implements Serializable {
+    /**
+     * 主键
+     */
+    @TableId(value = "id")
+    private Long id;
+
+    /**
+     * 名称
+     */
+    @TableField(value = "name")
+    private String name;
+
+    /**
+     * 图片
+     */
+    @TableField(value = "image")
+    private String image;
+
+    /**
+     * 主键
+     */
+    @TableField(value = "user_id")
+    private Long user_id;
+
+    /**
+     * 菜品id
+     */
+    @TableField(value = "dish_id")
+    private Long dish_id;
+
+    /**
+     * 套餐id
+     */
+    @TableField(value = "setmeal_id")
+    private Long setmeal_id;
+
+    /**
+     * 口味
+     */
+    @TableField(value = "dish_flavor")
+    private String dish_flavor;
+
+    /**
+     * 数量
+     */
+    @TableField(value = "number")
+    private Integer number;
+
+    /**
+     * 金额
+     */
+    @TableField(value = "amount")
+    private BigDecimal amount;
+
+    /**
+     * 创建时间
+     */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    private Date createTime;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+
+}
