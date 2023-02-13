@@ -17,4 +17,4 @@ mybatis-plus:
     db-config:
       id-type: ASSIGN_ID
 reggie:
-  path: "C:\\Users\\A\\Desktop\\瑞吉\\file\\"
+  path: C:\Users\A\Desktop\瑞吉\file\

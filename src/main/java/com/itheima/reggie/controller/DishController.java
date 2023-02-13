@@ -56,4 +56,11 @@ public class DishController {
     public R<DishDto> DishGetById(@PathVariable Long id) {
         return R.success(dishService.getByIdWithFlavor(id));
     }
+
+    @PutMapping
+    public R<String> updateById(@RequestBody DishDto dishDto) {
+        dishService.updateWithFlavor(dishDto);
+        return R.success("修改菜品成功");
+    }
+
 }

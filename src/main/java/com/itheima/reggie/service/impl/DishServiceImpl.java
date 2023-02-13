@@ -35,6 +35,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
     @Autowired
     @Lazy
+    private DishService dishService;
+
+    @Autowired
+    @Lazy
     private CategoryService categoryService;
 
     /**
@@ -91,6 +95,27 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
         dishDto.setFlavors(list);
         return dishDto;
+    }
+
+    @Override
+    @Transactional
+    public void updateWithFlavor(DishDto dishDto) {
+        //更新dish表基本信息
+        dishService.updateById(dishDto);
+
+        //更新dish_flavor表信息delete操作
+        LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(DishFlavor::getDish_id, dishDto.getId());
+        dishFlavorService.remove(queryWrapper);
+
+        //更新dish_flavor表信息insert操作
+        List<DishFlavor> flavors = dishDto.getFlavors();
+
+        flavors = flavors.stream().map((item) -> {
+            item.setDish_id(dishDto.getId());
+            return item;
+        }).collect(Collectors.toList());
+        dishFlavorService.saveBatch(flavors);
     }
 }
 

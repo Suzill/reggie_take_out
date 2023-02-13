@@ -22,32 +22,29 @@ public class CommonController {
     @Value("${reggie.path}")
     private String basePath;
 
-    /**
-     * 文件上传
-     * @param file 文件
-     * @return string
-     */
+    //文件上传
     @PostMapping("/upload")
-    public R<String> upload(MultipartFile file) {
+    public R<String> upload(MultipartFile file){
         //file 是一个临时文件，需要转存到指定位置，否则请求完成后临时文件会删除
         //log.info("file:{}",file.toString());
 
         //原始文件名
         String originalFilename = file.getOriginalFilename();
-        String suffix = file.getOriginalFilename().substring(originalFilename.lastIndexOf("."));
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf("."));
         //使用UUID随机生成文件名，防止因为文件名相同造成文件覆盖
-        String fileName = UUID.randomUUID() + suffix;
+        String fileName = UUID.randomUUID()+suffix;
+
         //创建一个目录对象
-        File file1 = new File(basePath);
-        File file2 = new File(file1.getAbsolutePath(), fileName);
+        File dir = new File(basePath);
         //判断当前目录是否存在
-        if (!file2.exists()){
+        if(!dir.exists()){
             //目录不存在
-            file2.mkdirs();
+            dir.mkdirs();
         }
-        //将临时文件转存到指定位置
+
         try {
-            file.transferTo(file2);
+            //将临时文件转存到指定位置
+            file.transferTo(new File(basePath+fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,7 +56,7 @@ public class CommonController {
 
         //输入流，通过输入流读取文件内容
         try {
-            FileInputStream inputStream = new FileInputStream(new File(basePath + name));
+            FileInputStream inputStream = new FileInputStream(basePath + name);
             //输出流，通过输出流将文件写回浏览器，在浏览器中展示图片
             ServletOutputStream servletInputStream = response.getOutputStream();
 
