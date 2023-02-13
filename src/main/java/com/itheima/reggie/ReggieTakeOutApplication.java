@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ReggieTakeOutApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ReggieTakeOutApplication.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(ReggieTakeOutApplication.class, args);
     }
 
 }

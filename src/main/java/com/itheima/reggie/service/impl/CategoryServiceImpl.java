@@ -14,6 +14,7 @@ import com.itheima.reggie.service.DishService;
 import com.itheima.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     public R<String> deleteByIds(int ids) {
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         // 添加查询条件，根据分类id进行查询
-        queryWrapper.eq(Dish::getCategory_id, ids);
+        queryWrapper.eq(Dish::getCategoryId, ids);
         long count = dishService.count(queryWrapper);
         // 查询当前分类是否关联菜品,如果已经关联，抛出业务异常
         if (count > 0) {

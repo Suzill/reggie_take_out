@@ -1,14 +1,25 @@
 package com.itheima.reggie.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.itheima.reggie.common.R;
 import com.itheima.reggie.dto.DishDto;
+import com.itheima.reggie.pojo.Category;
 import com.itheima.reggie.pojo.Dish;
+import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
 import com.itheima.reggie.mapper.DishMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author A
@@ -20,6 +31,10 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
     @Autowired
     private DishFlavorService dishFlavorService;
+
+    @Autowired
+    @Lazy
+    private CategoryService categoryService;
 
     /**
      * 新增菜品
@@ -33,6 +48,34 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         Long id = dishDto.getId();
 
 
+    }
+
+    @Override
+    public R<Page<DishDto>> pageList(int page, int pageSize, String name) {
+        Page<Dish> pageInfo = new Page<>(page, pageSize);
+        Page<DishDto> dishDtoPage = new Page<>();
+
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(!ObjectUtils.isEmpty(name), Dish::getName, name).orderByDesc(Dish::getUpdateTime);
+        Page<Dish> dishPage = this.page(pageInfo, queryWrapper);
+
+        List<DishDto> list = dishPage.getRecords().stream().map((item)->{
+            DishDto dishDto=new DishDto();
+
+            BeanUtils.copyProperties(item,dishDto);
+            Long categoryId = item.getCategoryId();
+            //根据id查分类对象
+            Category category = categoryService.getById(categoryId);
+            if(category!=null){
+                String categoryName = category.getName();
+                dishDto.setCategoryName(categoryName);
+            }
+            return dishDto;
+        }).collect(Collectors.toList());
+
+        dishDtoPage.setRecords(list);
+
+        return R.success(dishDtoPage);
     }
 }
 

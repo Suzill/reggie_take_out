@@ -1,5 +1,7 @@
 package com.itheima.reggie.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itheima.reggie.common.R;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.pojo.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -15,4 +17,6 @@ public interface DishService extends IService<Dish> {
 
     @Transactional
     void saveWithFlavor(DishDto dishDto);
+
+    R<Page<DishDto>> pageList(int page, int pageSize, String name);
 }

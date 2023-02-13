@@ -39,14 +39,15 @@ public class CommonController {
         String fileName = UUID.randomUUID() + suffix;
         //创建一个目录对象
         File file1 = new File(basePath);
+        File file2 = new File(file1.getAbsolutePath(), fileName);
         //判断当前目录是否存在
-        if (!file1.exists()){
+        if (!file2.exists()){
             //目录不存在
-            file1.mkdirs();
+            file2.mkdirs();
         }
         //将临时文件转存到指定位置
         try {
-            file.transferTo(file1);
+            file.transferTo(file2);
         } catch (IOException e) {
             e.printStackTrace();
         }

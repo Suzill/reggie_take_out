@@ -1,12 +1,14 @@
 package com.itheima.reggie.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itheima.reggie.common.R;
+import com.itheima.reggie.dto.DishDto;
+import com.itheima.reggie.pojo.Dish;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -21,7 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class DishController {
     @Autowired
     private DishService dishService;
-    @Autowired
-    private DishFlavorService dishFlavorService;
 
+    @PostMapping
+    public R<String> save(@RequestBody DishDto dish) {
+        dishService.save(dish);
+        return R.success("新增菜成功");
+    }
+
+    @GetMapping("/page")
+    public R<Page<DishDto>> page(int page, int pageSize, String name) {
+        return dishService.pageList(page, pageSize, name);
+    }
 }
