@@ -7,6 +7,7 @@ import com.itheima.reggie.common.R;
 import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.pojo.Category;
 import com.itheima.reggie.pojo.Dish;
+import com.itheima.reggie.pojo.DishFlavor;
 import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.DishFlavorService;
 import com.itheima.reggie.service.DishService;
@@ -76,6 +77,20 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         dishDtoPage.setRecords(list);
 
         return R.success(dishDtoPage);
+    }
+
+    @Override
+    public DishDto getByIdWithFlavor(Long id) {
+        Dish dish = this.getById(id);
+        DishDto dishDto = new DishDto();
+        BeanUtils.copyProperties(dish, dishDto);
+
+        LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(DishFlavor::getDish_id, id);
+        List<DishFlavor> list = dishFlavorService.list(queryWrapper);
+
+        dishDto.setFlavors(list);
+        return dishDto;
     }
 }
 

@@ -19,4 +19,6 @@ public interface DishService extends IService<Dish> {
     void saveWithFlavor(DishDto dishDto);
 
     R<Page<DishDto>> pageList(int page, int pageSize, String name);
+
+    DishDto getByIdWithFlavor(Long id);
 }

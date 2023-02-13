@@ -24,14 +24,36 @@ public class DishController {
     @Autowired
     private DishService dishService;
 
+    /**
+     * 新增菜品
+     * @param dish 菜品Dto
+     * @return return
+     */
     @PostMapping
     public R<String> save(@RequestBody DishDto dish) {
         dishService.save(dish);
         return R.success("新增菜成功");
     }
 
+    /**
+     * 新增菜品分页
+     * @param page 分页参数
+     * @param pageSize 分页参数
+     * @param name 菜品名称
+     * @return 菜品详情
+     */
     @GetMapping("/page")
     public R<Page<DishDto>> page(int page, int pageSize, String name) {
         return dishService.pageList(page, pageSize, name);
+    }
+
+    /**
+     * 根据菜品id获取菜品信息
+     * @param id 菜品id
+     * @return 菜品信息
+     */
+    @GetMapping("{id}")
+    public R<DishDto> DishGetById(@PathVariable Long id) {
+        return R.success(dishService.getByIdWithFlavor(id));
     }
 }
