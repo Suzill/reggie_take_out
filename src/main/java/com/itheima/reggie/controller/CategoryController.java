@@ -8,6 +8,7 @@ import com.itheima.reggie.pojo.Category;
 import com.itheima.reggie.pojo.Employee;
 import com.itheima.reggie.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class CategoryController {
      * @return string
      */
     @PostMapping
+    @Transactional
     public R<String> save(@RequestBody Category category) {
         return categoryService.saveCategory(category);
     }
@@ -54,17 +56,28 @@ public class CategoryController {
      * @return
      */
     @DeleteMapping("/{ids}")
+    @Transactional
     public R<String> deleteByIds(@PathVariable int ids) {
         return categoryService.deleteByIds(ids);
     }
 
+    /**
+     * 更新分类
+     * @param category 菜品分类
+     * @return return
+     */
     @PutMapping
+    @Transactional
     public R<String> update(@RequestBody Category category) {
         categoryService.updateById(category);
         return R.success("修改分类成功");
     }
 
-    //根据条件查询分类数据
+    /**
+     * //根据条件查询分类数据
+     * @param category 菜品分类
+     * @return 分类下拉
+     */
     @GetMapping("/list")
     public R<List<Category>> list(Category category){
         //条件构造器

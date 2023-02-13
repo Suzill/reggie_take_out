@@ -15,6 +15,7 @@ import com.itheima.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 * @author A
@@ -31,6 +32,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private SetmealService setmealService;
 
     @Override
+    @Transactional
     public R<String> saveCategory(Category category) {
         this.save(category);
         return R.success("新增分类成功");
@@ -46,6 +48,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
+    @Transactional
     public R<String> deleteByIds(int ids) {
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         // 添加查询条件，根据分类id进行查询

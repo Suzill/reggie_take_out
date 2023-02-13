@@ -1,7 +1,9 @@
 package com.itheima.reggie.service;
 
+import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.pojo.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
 * @author A
@@ -10,4 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface DishService extends IService<Dish> {
 
+
+    @Transactional
+    void saveWithFlavor(DishDto dishDto);
 }
