@@ -65,7 +65,7 @@ public class DishFlavor implements Serializable {
      * 是否删除
      */
     @TableField(value = "is_deleted")
-    private Integer is_deleted;
+    private Integer isDeleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

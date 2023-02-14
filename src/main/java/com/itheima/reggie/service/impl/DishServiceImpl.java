@@ -90,7 +90,7 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         BeanUtils.copyProperties(dish, dishDto);
 
         LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(DishFlavor::getDish_id, id);
+        queryWrapper.eq(DishFlavor::getDishId, id);
         List<DishFlavor> list = dishFlavorService.list(queryWrapper);
 
         dishDto.setFlavors(list);
@@ -105,14 +105,14 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
         //更新dish_flavor表信息delete操作
         LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(DishFlavor::getDish_id, dishDto.getId());
+        queryWrapper.eq(DishFlavor::getDishId, dishDto.getId());
         dishFlavorService.remove(queryWrapper);
 
         //更新dish_flavor表信息insert操作
         List<DishFlavor> flavors = dishDto.getFlavors();
 
         flavors = flavors.stream().map((item) -> {
-            item.setDish_id(dishDto.getId());
+            item.setDishId(dishDto.getId());
             return item;
         }).collect(Collectors.toList());
         dishFlavorService.saveBatch(flavors);
