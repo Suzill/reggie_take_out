@@ -36,25 +36,25 @@ public class ShoppingCart implements Serializable {
      * 主键
      */
     @TableField(value = "user_id")
-    private Long user_id;
+    private Long userId;
 
     /**
      * 菜品id
      */
     @TableField(value = "dish_id")
-    private Long dish_id;
+    private Long dishId;
 
     /**
      * 套餐id
      */
     @TableField(value = "setmeal_id")
-    private Long setmeal_id;
+    private Long setmealId;
 
     /**
      * 口味
      */
     @TableField(value = "dish_flavor")
-    private String dish_flavor;
+    private String dishFlavor;
 
     /**
      * 数量

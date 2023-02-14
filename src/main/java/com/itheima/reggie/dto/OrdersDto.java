@@ -18,5 +18,9 @@ public class OrdersDto extends Orders {
     private String consignee;
 
     private List<OrderDetail> orderDetails;
+
+    private int sumNum;
+
+
 	
 }

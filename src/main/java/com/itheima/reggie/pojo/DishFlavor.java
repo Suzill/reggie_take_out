@@ -23,7 +23,7 @@ public class DishFlavor implements Serializable {
      * 菜品
      */
     @TableField(value = "dish_id")
-    private Long dish_id;
+    private Long dishId;
 
     /**
      * 口味名称

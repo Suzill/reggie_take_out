@@ -7,6 +7,7 @@ import com.itheima.reggie.common.R;
 import com.itheima.reggie.pojo.User;
 import com.itheima.reggie.service.UserService;
 import com.itheima.reggie.utils.ValidateCodeUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,6 +76,15 @@ public class UserController {
         }
         return R.error("登陆失败");
     }
+
+    //用户登出
+    @PostMapping("/loginout")
+    public R<String> loginout(HttpServletRequest request){
+        //清理Session中保存的当前用户登录的id
+        request.getSession().removeAttribute("user");
+        return R.success("退出成功");
+    }
+
 
 
 
