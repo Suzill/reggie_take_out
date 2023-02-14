@@ -24,13 +24,13 @@ public class SetmealDish implements Serializable {
      * 套餐id 
      */
     @TableField(value = "setmeal_id")
-    private String setmeal_id;
+    private String setmealId;
 
     /**
      * 菜品id
      */
     @TableField(value = "dish_id")
-    private String dish_id;
+    private String dishId;
 
     /**
      * 菜品名称 （冗余字段）

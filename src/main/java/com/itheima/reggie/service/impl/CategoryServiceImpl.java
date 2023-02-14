@@ -61,7 +61,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         // 查询当前分类是否关联了套餐，如果已经关联，抛出业务异常
         // 添加查询条件，根据分类id进行查询
         LambdaQueryWrapper<Setmeal> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Setmeal::getCategory_id, ids);
+        wrapper.eq(Setmeal::getCategoryId, ids);
         long count1 = setmealService.count(wrapper);
         if (count1 > 0){
             // 已经关联套餐，抛出业务异常
